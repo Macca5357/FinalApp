@@ -51,15 +51,19 @@ public class Database extends SQLiteOpenHelper {
         return result != -1;
     }
 
-    public List<String> getLinks(){
+    public List<VideoModel> getVideos(){
         SQLiteDatabase db=this.getReadableDatabase();
-        Cursor cursor=db.rawQuery(" select * from "+LINKS_TABLE,null );
-        List<String> siteModels=new ArrayList<>();
+        Cursor cursor=db.rawQuery(" select * from "+VIDEO_TABLE,null );
+        List<VideoModel> videoModels=new ArrayList<>();
         if(cursor.moveToFirst()){
             do{
-                siteModels.add(cursor.getString(1));
+                VideoModel videoModel=new VideoModel();
+                videoModel.setVideoID(cursor.getInt(0));
+                videoModel.setVideoURL(cursor.getString(1));
+                videoModel.setVideoTitle(cursor.getString(2));
+                videoModels.add(videoModel);
             }while (cursor.moveToNext());
         }
-        return siteModels;
+        return videoModels;
     }
 }
