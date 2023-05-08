@@ -20,8 +20,7 @@ import com.seo.viedosapp.R;
 import java.util.List;
 
 
-public class VideoAdapter extends RecyclerView.Adapter<
-        VideoAdapter.CustomViewHolder> {
+public class VideoAdapter extends RecyclerView.Adapter<VideoAdapter.CustomViewHolder> {
     List<VideoModel> videoModels;
     Context context;
     private  onItemClickListener mListener;
@@ -35,8 +34,7 @@ public class VideoAdapter extends RecyclerView.Adapter<
      public static class  CustomViewHolder extends RecyclerView.ViewHolder{
       TextView video_title_text_view;
       Button play_button;
-          public CustomViewHolder(View itemView,
-                                  final onItemClickListener listener) {
+          public CustomViewHolder(View itemView, final onItemClickListener listener) {
              super(itemView);
             video_title_text_view=itemView.findViewById(R.id.video_title_text_view);
               play_button=itemView.findViewById(R.id.play_button);
@@ -67,15 +65,12 @@ public class VideoAdapter extends RecyclerView.Adapter<
     }
     
     @Override
-    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType)
-    {
-        return new CustomViewHolder(LayoutInflater.from(parent.getContext())
-                .inflate(viewType, parent, false),mListener);
+    public CustomViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        return new CustomViewHolder(LayoutInflater.from(parent.getContext()).inflate(viewType, parent, false),mListener);
     }
     @SuppressLint("SetTextI18n")
     @Override
     public void onBindViewHolder(CustomViewHolder holder, int position) {
-          holder.video_title_text_view.setText(videoModels.get(position)
-                  .videoTitle());
+          holder.video_title_text_view.setText(videoModels.get(position).videoTitle());
       }
 }
