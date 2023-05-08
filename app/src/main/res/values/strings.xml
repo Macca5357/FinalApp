@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">ViedosApp</string>
+    <string name="app_name">VideosApp</string>
+    <string name="noVideoFound">No video found</string>
+    <string name="personalVideo">Personal Videos List</string>
+    <string name="addNewVideo">Add new Video</string>
+    <string name="addVideoToList">Add Video to List</string>
+    <string name="videoCancel">Cancel</string>
+    <string name="videoSubmit">Submit</string>
 </resources>

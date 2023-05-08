@@ -2,6 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
  <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+
     <application
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
@@ -23,9 +26,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true"></activity>
+
+        <receiver
+            android:name=".VideoBroadcastReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.seo.videosapp.ACTION_VIDEO_PLAYING"/>
+                <action android:name="com.seo.videosapp.ACTION_VIDEO_STOPPED"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

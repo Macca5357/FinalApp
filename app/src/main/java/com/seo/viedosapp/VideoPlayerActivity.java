@@ -5,7 +5,9 @@ package com.seo.viedosapp;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.BroadcastReceiver;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -22,12 +24,18 @@ public class VideoPlayerActivity extends AppCompatActivity {
 
     TextView video_title_text_view;
     String videoURL = "";
+    String videoTitle="";
     ProgressBar progressBarVideoProgress;
-
+    private BroadcastReceiver videoBroadcastReceiver;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video_player);
+        videoBroadcastReceiver = new VideoBroadcastReceiver();
+        IntentFilter filter = new IntentFilter();
+        filter.addAction("VIDEO_STARTED");
+        filter.addAction("VIDEO_STOPPED");
+        registerReceiver(videoBroadcastReceiver, filter);
         initView();
         getIntentData();
         playVideo();
@@ -51,18 +59,24 @@ public class VideoPlayerActivity extends AppCompatActivity {
             @Override
             public void onPrepared(MediaPlayer mp) {
                 progressBarVideoProgress.setVisibility(View.GONE);
+                Intent videoStartedIntent = new Intent("VIDEO_STARTED");
+                videoStartedIntent.putExtra("videoTitle",videoTitle );
+                sendBroadcast(videoStartedIntent);
+
             }
         });
         simpleVideoView.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
                 Toast.makeText(getApplicationContext(), "Thank you - video finished.", Toast.LENGTH_LONG).show(); // display a toast when a video is completed
+                Intent videoStoppedIntent = new Intent("VIDEO_STOPPED");
+                sendBroadcast(videoStoppedIntent);
             }
         });
         simpleVideoView.setOnErrorListener(new MediaPlayer.OnErrorListener() {
             @Override
             public boolean onError(MediaPlayer mp, int what, int extra) {
-                Toast.makeText(getApplicationContext(), "Oops An Error Occur While Playing Video...!!!", Toast.LENGTH_LONG).show(); // display a toast when an error occurs while playing a video
+                Toast.makeText(getApplicationContext(), "Oops An Error Occur While Playing Video...!!!", Toast.LENGTH_LONG).show(); // display a toast when an error occurs while playing an video
                 return false;
             }
         });
@@ -72,7 +86,8 @@ public class VideoPlayerActivity extends AppCompatActivity {
     private void getIntentData() {
         Intent intent = getIntent();
         videoURL = intent.getStringExtra("videoURL");
-        video_title_text_view.setText(intent.getStringExtra("videoName"));
+        videoTitle=intent.getStringExtra("videoName");
+        video_title_text_view.setText(videoTitle);
     }
 
     private void initView() {
@@ -80,5 +95,12 @@ public class VideoPlayerActivity extends AppCompatActivity {
         progressBarVideoProgress = findViewById(R.id.loading_indicator);
         video_title_text_view=findViewById(R.id.video_title_text_view);
 
+    }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+       Intent videoStoppedIntent = new Intent("VIDEO_STOPPED");
+       sendBroadcast(videoStoppedIntent);
+        unregisterReceiver(videoBroadcastReceiver);
     }
 }

@@ -41,11 +41,8 @@ public class VideoBroadcastReceiver extends BroadcastReceiver {
             notificationManager.cancel(NOTIFICATION_ID);
         }
     }
-    private void showNotification(Context context, String title,
-                                  String message) {
-        NotificationManager notificationManager =
-                (NotificationManager) context.getSystemService
-                        (Context.NOTIFICATION_SERVICE);
+    private void showNotification(Context context, String title, String message) {
+        NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 
         // Create a notification channel
         String channelId = "MyBroadcastReceiverApp";
@@ -53,16 +50,14 @@ public class VideoBroadcastReceiver extends BroadcastReceiver {
         int importance = NotificationManager.IMPORTANCE_HIGH;
         NotificationChannel channel = null;
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            channel = new NotificationChannel(channelId, channelName,
-                    importance);
+            channel = new NotificationChannel(channelId, channelName, importance);
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
             notificationManager.createNotificationChannel(channel);
         }
 
         // Create the notification
-        NotificationCompat.Builder builder = new
-                NotificationCompat.Builder(context, channelId)
+        NotificationCompat.Builder builder = new NotificationCompat.Builder(context, channelId)
                 .setSmallIcon(R.drawable.ic_launcher_foreground)
                 .setContentTitle(title)
                 .setContentText(message)

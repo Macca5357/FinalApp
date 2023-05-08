@@ -19,7 +19,7 @@
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Personal Videos List"
+            android:text="@string/personalVideo"
             android:textSize="20sp"
             android:textStyle="bold" />
     </LinearLayout>
@@ -35,13 +35,22 @@
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
-            android:layout_height="match_parent" />
+            android:layout_height="match_parent"
+            android:visibility="gone" />
 
         <LinearLayout
             android:id="@+id/layoutEmpty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:orientation="vertical"></LinearLayout>
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/noVideoFound" />
+        </LinearLayout>
     </LinearLayout>
 
     <LinearLayout
@@ -61,7 +70,7 @@
             android:paddingLeft="40dp"
             android:paddingEnd="40dp"
             android:paddingRight="40dp"
-            android:text="Add new Video"
+            android:text="@string/addNewVideo"
             android:textAllCaps="false"
             android:textColor="@color/white" />
     </LinearLayout>
